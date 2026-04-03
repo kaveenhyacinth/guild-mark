@@ -57,9 +57,10 @@ function localDateIso(): string {
 type Props = {
   initialSkills: Skill[];
   initialSessions: Session[];
+  isGuest: boolean;
 };
 
-export function DashboardClient({ initialSkills, initialSessions }: Props) {
+export function DashboardClient({ initialSkills, initialSessions, isGuest }: Props) {
   const [skills] = useState<Skill[]>(initialSkills);
   const [sessions, setSessions] = useState<Session[]>(() => {
     if (typeof window === "undefined") {
@@ -288,6 +289,11 @@ export function DashboardClient({ initialSkills, initialSessions }: Props) {
           <p className="text-sm text-[var(--color-text-secondary)]">
             You&apos;ve practiced {summaries.filter((item) => item.streak.status === "active").length} skills today. Keep it up.
           </p>
+          {isGuest ? (
+            <p className="text-xs text-[var(--color-text-tertiary)]">
+              You are exploring in guest mode. Create an account to save your own sessions.
+            </p>
+          ) : null}
         </section>
 
         <section className="grid gap-4 lg:grid-cols-12">

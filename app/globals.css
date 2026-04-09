@@ -185,13 +185,30 @@ h2,
 h3,
 h4 {
   font-family: var(--font-space-grotesk), system-ui, -apple-system, sans-serif;
+  text-wrap: balance;
 }
 
 a {
   color: inherit;
 }
 
+/* Prevent double-tap zoom delay on interactive elements */
+button,
+[role="button"],
+input,
+select,
+textarea,
+a {
+  touch-action: manipulation;
+}
+
+/* Numeric figures — prevent layout shift in data columns */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -206,9 +223,11 @@ a {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   html {
     @apply font-sans;
   }

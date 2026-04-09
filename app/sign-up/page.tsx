@@ -5,8 +5,20 @@ import { FormEvent, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Field, FieldContent, FieldGroup, FieldLabel } from "@/components/ui/field";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Field,
+  FieldContent,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
@@ -50,7 +62,9 @@ export default function SignUpPage() {
       <Card className="w-full">
         <CardHeader>
           <CardTitle>Create account</CardTitle>
-          <CardDescription>Save your sessions and sync your progress across devices.</CardDescription>
+          <CardDescription>
+            Save your sessions and sync your progress across devices.
+          </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent>
@@ -61,6 +75,7 @@ export default function SignUpPage() {
                   <Input
                     id="name"
                     type="text"
+                    autoComplete="name"
                     value={name}
                     onChange={(event) => setName(event.target.value)}
                     placeholder="Jordan"
@@ -73,6 +88,8 @@ export default function SignUpPage() {
                   <Input
                     id="email"
                     type="email"
+                    autoComplete="email"
+                    spellCheck={false}
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                     placeholder="you@example.com"
@@ -86,6 +103,7 @@ export default function SignUpPage() {
                   <Input
                     id="password"
                     type="password"
+                    autoComplete="new-password"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
                     placeholder="At least 8 characters"
@@ -94,14 +112,24 @@ export default function SignUpPage() {
                   />
                 </FieldContent>
               </Field>
-              {error ? <p className="text-sm text-[var(--color-error)]">{error}</p> : null}
+              {error ? (
+                <p role="alert" className="text-sm text-[var(--color-error)]">
+                  {error}
+                </p>
+              ) : null}
             </FieldGroup>
           </CardContent>
           <CardFooter className="flex-col items-stretch gap-3">
             <Button type="submit" disabled={pending}>
-              {pending ? "Creating account..." : "Create account"}
+              {pending ? "Creating account…" : "Create account"}
             </Button>
-            <Link href="/sign-in" className={cn(buttonVariants({ variant: "outline" }), "justify-center")}>
+            <Link
+              href="/sign-in"
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "justify-center",
+              )}
+            >
               I already have an account
             </Link>
           </CardFooter>

@@ -4,8 +4,20 @@ import Link from "next/link";
 import { FormEvent, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Field, FieldContent, FieldGroup, FieldLabel } from "@/components/ui/field";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Field,
+  FieldContent,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 
@@ -22,9 +34,12 @@ export default function ResetPasswordPage() {
     setError(null);
 
     const redirectTo = `${window.location.origin}/auth/callback?next=/dashboard`;
-    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo,
-    });
+    const { error: resetError } = await supabase.auth.resetPasswordForEmail(
+      email,
+      {
+        redirectTo,
+      },
+    );
 
     if (resetError) {
       setError(resetError.message);
@@ -41,7 +56,9 @@ export default function ResetPasswordPage() {
       <Card className="w-full">
         <CardHeader>
           <CardTitle>Reset password</CardTitle>
-          <CardDescription>Enter your account email and we&apos;ll send a reset link.</CardDescription>
+          <CardDescription>
+            Enter your account email and we&apos;ll send a reset link.
+          </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent>
@@ -52,6 +69,8 @@ export default function ResetPasswordPage() {
                   <Input
                     id="email"
                     type="email"
+                    autoComplete="email"
+                    spellCheck={false}
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                     placeholder="you@example.com"
@@ -60,16 +79,25 @@ export default function ResetPasswordPage() {
                 </FieldContent>
               </Field>
               {sent ? (
-                <p className="text-sm text-[var(--color-success)]">Reset link sent. Check your inbox.</p>
+                <p className="text-sm text-[var(--color-success)]">
+                  Reset link sent. Check your inbox.
+                </p>
               ) : null}
-              {error ? <p className="text-sm text-[var(--color-error)]">{error}</p> : null}
+              {error ? (
+                <p role="alert" className="text-sm text-[var(--color-error)]">
+                  {error}
+                </p>
+              ) : null}
             </FieldGroup>
           </CardContent>
           <CardFooter className="flex-col items-stretch gap-3">
             <Button type="submit" disabled={pending}>
-              {pending ? "Sending link..." : "Send reset link"}
+              {pending ? "Sending link…" : "Send reset link"}
             </Button>
-            <Link href="/sign-in" className="text-center text-sm underline underline-offset-4 text-[var(--color-text-secondary)]">
+            <Link
+              href="/sign-in"
+              className="text-center text-sm underline underline-offset-4 text-[var(--color-text-secondary)]"
+            >
               Back to sign in
             </Link>
           </CardFooter>

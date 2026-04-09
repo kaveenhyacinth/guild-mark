@@ -5,8 +5,20 @@ import { FormEvent, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Field, FieldContent, FieldGroup, FieldLabel } from "@/components/ui/field";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Field,
+  FieldContent,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
@@ -44,7 +56,9 @@ export default function SignInPage() {
       <Card className="w-full">
         <CardHeader>
           <CardTitle>Sign in</CardTitle>
-          <CardDescription>Continue building your skills with your saved dashboard.</CardDescription>
+          <CardDescription>
+            Continue building your skills with your saved dashboard.
+          </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent>
@@ -55,6 +69,8 @@ export default function SignInPage() {
                   <Input
                     id="email"
                     type="email"
+                    autoComplete="email"
+                    spellCheck={false}
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                     placeholder="you@example.com"
@@ -68,6 +84,7 @@ export default function SignInPage() {
                   <Input
                     id="password"
                     type="password"
+                    autoComplete="current-password"
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
                     placeholder="Enter your password"
@@ -75,18 +92,31 @@ export default function SignInPage() {
                   />
                 </FieldContent>
               </Field>
-              {error ? <p className="text-sm text-[var(--color-error)]">{error}</p> : null}
+              {error ? (
+                <p role="alert" className="text-sm text-[var(--color-error)]">
+                  {error}
+                </p>
+              ) : null}
             </FieldGroup>
           </CardContent>
           <CardFooter className="flex-col items-stretch gap-3">
             <Button type="submit" disabled={pending}>
-              {pending ? "Signing in..." : "Sign in"}
+              {pending ? "Signing in…" : "Sign in"}
             </Button>
-            <Link href="/dashboard" className={cn(buttonVariants({ variant: "outline" }), "justify-center")}>
+            <Link
+              href="/dashboard"
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "justify-center",
+              )}
+            >
               Continue as guest
             </Link>
             <div className="flex items-center justify-between text-sm text-[var(--color-text-secondary)]">
-              <Link href="/reset-password" className="underline underline-offset-4">
+              <Link
+                href="/reset-password"
+                className="underline underline-offset-4"
+              >
                 Forgot password?
               </Link>
               <Link href="/sign-up" className="underline underline-offset-4">
